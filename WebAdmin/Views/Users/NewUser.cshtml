@@ -1,0 +1,95 @@
+﻿@model Model.Auth.Usuarios
+@{
+    ViewBag.Title = "Crear nuevo Administrador";
+}
+
+<h1 class="page-header">Crear nuevo Administrador</h1>
+<hr />
+
+@using (Html.BeginForm("SaveNewUser", "Users", FormMethod.Post))
+{
+
+    @Html.Hidden("Slug", Guid.NewGuid())
+    @Html.Hidden("Password", Guid.NewGuid())
+    @Html.Hidden("Foto2", Guid.NewGuid())
+    @Html.Hidden("IdRol", 1)
+    @Html.Hidden("CreatedAt", DateTime.Now)
+
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Información</a></li>
+        <li role="presentation"><a href="#ubicacion" aria-controls="ubicacion" role="tab" data-toggle="tab">Ubicación</a></li>
+        <li role="presentation"><a href="#social" aria-controls="social" role="tab" data-toggle="tab">Social</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="info">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        @Html.HiddenFor(x => x.Id)
+                        @Html.LabelFor(x => x.Nombres)
+                        @Html.TextBoxFor(x => x.Nombres, new { @class = "form-control", placeholder = "Ingrese el nombre" })
+                        @Html.ValidationMessageFor(x => x.Nombres, null, new { @class = "label label-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Apellidos)
+                        @Html.TextBoxFor(x => x.Apellidos, new { @class = "form-control", placeholder = "Ingrese los apellidos" })
+                        @Html.ValidationMessageFor(x => x.Apellidos, null, new { @class = "label label-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Email)
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "Ingrese los apellidos" })
+                        @Html.ValidationMessageFor(x => x.Email, null, new { @class = "label label-danger" })
+                        <span class="help-block">Recuerde el usuario de acceso es su Email</span>
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Dni)
+                        @Html.TextBoxFor(x => x.Dni, new { @class = "form-control", placeholder = "Ingrese el DNI" })
+                        @Html.ValidationMessageFor(x => x.Dni, null, new { @class = "label label-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Sexo</label>
+                        <div class="radio">
+                            <label class="control-label">@Html.RadioButtonFor(x => x.Sexo, "M")  Masculino</label>
+                        </div>
+                        <div class="radio">
+                            <label class="control-label">@Html.RadioButtonFor(x => x.Sexo, "F")  Femenino</label>
+                        </div>
+                        @Html.ValidationMessageFor(x => x.Sexo, null, new { @class = "label label-danger" })
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Foto de perfil</label>
+                        <input type="file" name="picture" class="form-control" />
+                        <span class="help-block">Se recomienda subir una imagen de 500px de ancho para agilizar los tiempo de carga</span>
+                    </div>
+
+                </div>
+                <div class="col-sm-4">
+                    <div class="thumbnail">
+                        <img src="~/@Model.PictureForView" alt="User Picture" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="ubicacion">
+
+        </div>
+        <div role="tabpanel" class="tab-pane" id="social">
+
+        </div>
+    </div>
+
+    <div class="text-right well well-sm">
+        <button data-ajax="true" class="btn btn-default">Guardar</button>
+    </div>
+}
+

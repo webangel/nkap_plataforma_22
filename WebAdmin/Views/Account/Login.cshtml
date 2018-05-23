@@ -1,0 +1,168 @@
+﻿@model Model.Custom.LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>NKAP | Login</title>
+    <!-- Meta-Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Border sign in Form a Responsive Web Template, Bootstrap Web Templates, Flat Web Templates, Android Compatible Web Template, Smartphone Compatible Web Template, Free Webdesigns for Nokia, Samsung, LG, Sony Ericsson, Motorola Web Design">
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!-- //Meta-Tags -->
+    <!-- Index-Page-CSS -->
+
+
+    <link href="~/Resources/base/css/stylelogin.css" rel="stylesheet" />
+    <!-- //Custom-Stylesheet-Links -->
+    <!--fonts -->
+    <!-- //fonts -->
+
+    <link href="~/Resources/base/font-wesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- //Font-Awesome-File-Links -->
+    <!-- Google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=devanagari,latin-ext" rel="stylesheet">
+    <!-- Google fonts -->
+    <link href="~/Resources/css/toastr.min.css" rel="stylesheet" />
+</head>
+<!-- //Head -->
+<!-- Body -->
+
+<body>
+    <h1 class="title-agile text-center">NKAP</h1>
+
+    @using (Html.BeginForm("Acceder", "Account", FormMethod.Post, new { id= "frm-loginupd" } ))
+    {
+        <div class="content-w3ls">
+            <div class="content-bottom">
+                <h2>Sign In Here <i class="fa fa-hand-o-down" aria-hidden="true"></i></h2>
+                <form action="#" method="post">
+                    <div class="field-group">
+                        <div class="wthree-field">
+
+                            @Html.TextBoxFor(x => x.username, new { placeholder = "Ingrese su nombre" })
+                            @Html.ValidationMessageFor(x => x.username, null, new { @class = "label label-danger" })
+
+
+                        </div>
+                        <span class="fa fa-user" aria-hidden="true"></span>
+                    </div>
+                    <div class="field-group">
+                        <div class="wthree-field">
+                            @Html.PasswordFor(x => x.Password, new { placeholder = "Ingrese su password" })
+                            @Html.ValidationMessageFor(x => x.Password, null, new { @class = "label label-danger" })
+                        </div>
+                        <span class="fa fa-lock" aria-hidden="true"></span>
+                    </div>
+                    <div class="field-group">
+                        <div class="check">
+                            <label class="checkbox w3l">
+                                <input type="checkbox" onclick="myFunction()">
+                                <i> </i>show password
+                            </label>
+                        </div>
+                        <!-- script for show password -->
+                        <script>
+                        function myFunction() {
+                            var x = document.getElementById("myInput");
+                            if (x.type === "password") {
+                                x.type = "text";
+                            } else {
+                                x.type = "password";
+                            }
+                        }
+                        </script>
+                        <!-- //script for show password -->
+                    </div>
+                    <div class="wthree-field">
+                        <input id="saveForm" name="saveForm"  type="submit" value="Ingresar" />
+                    </div>
+                    <ul class="list-login">
+                        <li class="switch-agileits">
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                                keep signed in
+                            </label>
+                        </li>
+                        <li>
+                            <a href="#" class="text-right">Olvidaste la contraseña?</a>
+                        </li>
+                        <li class="clearfix"></li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    }
+   
+    <div class="copyright text-center">
+        <p>
+            NKAP © 2018. Todos los derechos reservados. 
+        </p>
+    </div>
+    <script src="~/Resources/js/jquery-1.10.2.min.js"></script>
+    <script src="~/Resources/js/bootstrap.min.js"></script>
+    <script src="~/Resources/js/jquery.validate.js"></script>
+    <script src="~/Resources/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Resources/js/jquery.form.js"></script>
+    <script src="~/Resources/js/toastr.min.js"></script>
+    <script src="~/Resources/js/ini.js"></script>
+
+</body>
+
+<!-- //Body -->
+</html>
+
+<script>
+    $(document).ready(function () {
+
+
+        $('#frm-loginupd').submit(function () {
+
+            var form = $(this);
+            var block = $('<div  class="carga alert alert-success" >Cargando..</div></div>');
+            form.prepend(block);
+            form.ajaxSubmit(
+                {
+                    dataType: 'JSON',
+                    type: 'POST',
+                    url: form.attr('action'),
+                    success: function (r) {
+                        if (r.Response==true) {
+                            block.remove();
+                            window.location.href = r.Href;
+                            toastr.success("Bienvenido al sistema!", r.Message);
+
+
+                        }
+                        else
+                        {
+                            block.remove();
+                            toastr.error("Algo esta mal!", r.Message);
+
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+
+            return false;
+        })
+    });
+
+
+</script>
